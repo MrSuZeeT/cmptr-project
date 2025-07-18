@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BYD - Electric Vehicles</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* Custom red for BYD logo and button */
+    .byd-red {
+      color: #e60012;
+    }
+    .byd-red-bg {
+      background-color: #e60012;
+    }
+    /* Navbar drop-down transition */
+    .dropdown-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .dropdown-menu.open {
+      max-height: 100vh;
+    }
+    .navbar {
+     background: transparent;
+     padding: 1rem 0;
+     position: sticky;
+     top: 0;
+     z-index: 1000;
+    }
+
+   .btn{
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 1rem;
+    color: rgb(255, 251, 251);
+    border: 2px solid rgb(255, 0, 0);
+    transition: 0.3s ease;
+    cursor: pointer;
+    position: fixed;
+    bottom: 70px;
+    left: 790px;
+    }
+
+   .btn:hover{
+    transform: scale3d(1.03);
+    background-color: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0 0 25px rgb(238, 64, 64);
+    }
+  </style>
+</head>
+<body class="bg-black text-white font-sans" background="Unleash the Future with BYD Seal.mp4">
+ <video autoplay muted loop playsinline id="bg-video" class="fixed top-0 left-0 w-full h-full object-cover z-[-1]">
+    <source src="Unleash the Future with BYD Seal.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+ </video>
+
+  <header class="fixed top-0 left-0 right-0 z-50">
+    <div class="navbar">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-16 flex items-center justify-between h-16">
+      <div class="flex-shrink-0">
+        <a href="#" aria-label="BYD home" class="text-[1.75rem] font-black byd-red select-none"><img src="byd-seeklogo.png" alt="BMW" width="70px"></a>
+      </div>
+
+      <ul class="hidden md:flex items-center space-x-8 text-sm font-medium">
+        <li class="relative group">
+          <button aria-haspopup="true" aria-expanded="false" class="hover:text-red-600 focus:outline-none focus:text-red-600 inline-flex items-center gap-1">
+            Models
+            <svg class="w-3 h-3 text-white group-hover:text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+
+          <ul class="absolute left-0 mt-2 w-40 bg-black bg-opacity-95 rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200" role="menu" aria-label="Models submenu">
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Model A</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Model B</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Model C</a></li>
+          </ul>
+        </li>
+
+        <li class="relative group">
+          <button aria-haspopup="true" aria-expanded="false" class="hover:text-red-600 focus:outline-none focus:text-red-600 inline-flex items-center gap-1">
+            Technology
+            <svg class="w-3 h-3 text-white group-hover:text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+
+          <ul class="absolute left-0 mt-2 w-44 bg-black bg-opacity-95 rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200" role="menu" aria-label="Technology submenu">
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Battery</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Drive System</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Safety</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#" class="hover:text-red-600 transition-colors">Price List</a></li>
+        <li><a href="#" class="hover:text-red-600 transition-colors">Charging Network</a></li>
+        <li><a href="#" class="hover:text-red-600 transition-colors">Find A Dealer</a></li>
+        <li><a href="#" class="hover:text-red-600 transition-colors">Contact Us</a></li>
+      </ul>
+
+      <button id="mobile-menu-btn" aria-label="Toggle menu" class="md:hidden focus:outline-none focus:ring-2 focus:ring-red-600">
+        <svg id="menu-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="md:hidden bg-black bg-opacity-95 text-white">
+      <ul class="flex flex-col px-6 py-4 space-y-3 text-base font-medium">
+
+        <li>
+          <button aria-haspopup="true" aria-expanded="false" class="w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-red-600" data-dropdown="models-dropdown">
+            Models
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+          </button>
+          <ul id="models-dropdown" class="dropdown-menu pl-4 mt-2 space-y-1">
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Model A</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Model B</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Model C</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <button aria-haspopup="true" aria-expanded="false" class="w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-red-600" data-dropdown="technology-dropdown">
+            Technology
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+          </button>
+          <ul id="technology-dropdown" class="dropdown-menu pl-4 mt-2 space-y-1">
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Battery</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Drive System</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Safety</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Price List</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Charging Network</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Find A Dealer</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Contact Us</a></li>
+      </ul>
+    </div>
+    </div>
+  </header>
+</section>
+
+<section class="relative max-w-screen overflow-hidden h-screen bg-black">
+    <div class="absolute inset-0">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+            <source src="Unleash the Future with BYD Seal.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"></div>
+    </div>
+    <div class="relative z-10 flex flex-col items-center justify-end pb-20 h-full px-6 text-center">
+        <div class="max-w-4xl mx-auto space-y-6">
+            <div class="pt-8">
+                <a class="inline-block bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 ease-in-out hover:bg-red-700 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-500/50" href="/sealion7">Explore Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main>
+    <div class="featured-vehicles">
+        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
+            <div class="absolute inset-0 z-[-1]">
+                <img alt="Byd Sealion 7 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="2.webp" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
+                <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+            <div class="absolute top-0 left-0 right-0 z-10">
+                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Sealion 7</h1>
+            </div>
+            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
+                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Coming Soon</p>
+                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">All electric full-sized SUV</p>
+                <div class="transition-opacity duration-700">
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-sealion-7">Book a Test Drive</a>
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/sealion7">Explore Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
+            <div class="absolute inset-0 z-[-1]">
+                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="m6-bg-ag7dS6p9.webp" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
+                <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+            <div class="absolute top-0 left-0 right-0 z-10">
+                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd M6</h1>
+            </div>
+            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
+                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Safe Comfortable Spacious</p>
+                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Nepal's First Premium 7-seater Electric MPV</p>
+                <div class="transition-opacity duration-700">
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
+            <div class="absolute inset-0 z-[-1]">
+                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="sealcom-BDg0Ylg1.jpg" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
+                <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+            <div class="absolute top-0 left-0 right-0 z-10">
+                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Seal</h1>
+            </div>
+            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
+                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Seal Your Success</p>
+                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Innovation Meets Acceleration</p>
+                <div class="transition-opacity duration-700">
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
+            <div class="absolute inset-0 z-[-1]">
+                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="homeDolphin.jpg" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
+                <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+            <div class="absolute top-0 left-0 right-0 z-10">
+                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Dolphin</h1>
+            </div>
+            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
+                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Safe & Smart Family Car</p>
+                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Agile Versatile Intelligent</p>
+                <div class="transition-opacity duration-700">
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
+            <div class="absolute inset-0 z-[-1]">
+                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="atto3-bg-BlwpiNHS.webp" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
+                <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+            <div class="absolute top-0 left-0 right-0 z-10">
+                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Atto 3</h1>
+            </div>
+            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
+                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Energy Awaken</p>
+                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Nepal's First Sporty Electric SUV</p>
+                <div class="transition-opacity duration-700">
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
+                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer class="bg-black text-white max-w-screen overflow-hidden">
+    <div class="max-w-7xl mx-auto py-4 lg:py-12 px-4 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-[30px]">
+        <div class="space-y-4">
+            <h3 class="md:text-[1.8rem] text-2xl font-black">Subscribe to our newsletter</h3>
+            <p class="text-md sm:text-base text-gray-300">Join our newsletter to stay up to date on features and releases.</p>
+        </div>
+
+        <form class="flex flex-wrap sm:flex-nowrap gap-3 h-auto sm:h-12 mt-auto col-span-2">
+            <input placeholder="Full Name" class="w-full sm:flex-1 bg-neutral-900 border border-neutral-800 rounded-md px-3 py-2 text-white focus:outline-none" type="text" name="name">
+            <input placeholder="Email" class="w-full sm:flex-1 bg-neutral-900 border border-neutral-800 rounded-md px-3 py-2 text-white focus:outline-none" type="email" name="email">
+            <button type="submit" class="relative font-black cursor-pointer w-full sm:w-auto px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md flex items-center justify-center gap-2 transition">Subscribe</button>
+        </form>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-16 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+        <div>
+            <h4 class="mb-8 text-xl font-bold">Models</h4>
+            <ul class="space-y-3">
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">BYD Dolphin</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">BYD Seal</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">BYD ATTO 3</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">BYD M6</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">BYD SEALION 7</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="mb-8 text-xl font-bold">Company</h4>
+            <ul class="space-y-3">
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">About BYD</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">About Cimex</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">Blade Battery</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">ePlatform 3.0</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="mb-8 text-xl font-bold">Tools</h4>
+            <ul class="space-y-3">
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">Charging Network</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">Find a Dealer</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="mb-8 text-xl font-bold">Other</h4>
+            <ul class="space-y-3">
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">Price List</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">Contact us</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">Exchange Vehicle</a></li>
+                <li><a class="hover:text-red-600 font-normal text-lg text-neutral-400" href="#">Test Drive</a></li>
+            </ul>
+        </div>
+        <div class="xl:col-span-2 flex flex-col lg:flex-row lg:justify-between lg:items-start gap-6">
+            <div>
+                <div class="flex items-center gap-4 mb-8">
+                  <img alt="cimex" class="w-1/2 h-auto object-contain" src="image.png">
+                    <img alt="BYD Logo" class="w-1/2 h-auto object-contain" src="byd-seeklogo.png">
+                    </div>
+                    <div class="d-flex justify-content-between py-3 px-1 border-top">
+                      <i class="fa-solid fa-envelope"></i><a rel="noopener noreferrer" class="text-base text-gray-300 hover:text-white transition " href="mailto:info@cimex.com.np" target="_blank">info@cimex.com.np</a></br>
+                      <i class="fa-solid fa-phone"></i><a rel="noopener noreferrer" class="text-base text-gray-300 hover:text-white transition  " href="tel:01-5970733" target="_blank">01-5970733</a></br>
+                      <i class="fa-solid fa-mobile-screen-button"></i><a rel="noopener noreferrer" class="text-base text-gray-300 hover:text-white transition  " href="tel:+977-9802396101" target="_blank">+977-9802396101</a></br>
+                      <i class="fa-solid fa-location-dot"></i><a rel="noopener noreferrer" class="text-base text-gray-300 hover:text-white transition  " href="https://maps.app.goo.gl/dGAzUeoVRtHCcPxT9" target="_blank">Thirbam Road, BYD Park, Bhat-Bhateni Naxal, Kathmandu Bagmati Nepal</a></br>
+                    </div>
+                </div>
+             </div>
+         </div>
+    <div>  
+      <div class="mb-1">
+    <p>&copy; 2025 cimex | All Rights Preserved</p>
+    <a href="#">Privacy Policies</a>
+    </div>
+
+</body>
+<body>
+</html>
+
