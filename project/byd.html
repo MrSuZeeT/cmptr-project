@@ -31,26 +31,28 @@
      z-index: 1000;
     }
 
-   .btn{
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: rgb(255, 0, 0);
-    border-radius: 1rem;
-    color: rgb(255, 251, 251);
-    border: 2px solid rgb(255, 0, 0);
-    transition: 0.3s ease;
-    cursor: pointer;
-    position: fixed;
-    bottom: 70px;
-    left: 790px;
-    }
+   .btn {
+  display: inline-block;
+  padding: 15px 20px;
+  background-color: rgb(255, 0, 0);
+  border-radius: 1rem;
+  color: white;
+  border: 2px solid rgb(255, 0, 0);
+  transition: 0.3s ease;
+  cursor: pointer;
+  position: fixed;
+  bottom: 30px;
+  right: 30px; /* ✅ Changed from right: 30px to left: 30px */
+  z-index: 999;
+}
 
-   .btn:hover{
-    transform: scale3d(1.03);
-    background-color: rgb(255, 0, 0);
-    color: rgb(255, 255, 255);
-    box-shadow: 0 0 25px rgb(238, 64, 64);
-    }
+.btn:hover {
+  transform: scale(1.05);
+  background-color: rgb(255, 0, 0);
+  color: white;
+  box-shadow: 0 0 25px rgb(238, 64, 64);
+}
+
   </style>
 </head>
 <body class="bg-black text-white font-sans" background="images/Unleash the Future with BYD Seal.mp4">
@@ -255,13 +257,24 @@
 </main>
 
  <div id="footer-placeholder"></div>
+ <button onclick="scrollToTop()" id="backToTopBtn" title="Go to top" class="btn hidden">
+  <i class="fas fa-arrow-up"></i>
+</button>
   <script>
-    fetch("pages/footer.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("footer-placeholder").innerHTML = data;
-      });
-  </script>
+  const backToTopBtn = document.getElementById("backToTopBtn");
+
+  window.onscroll = function () {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      backToTopBtn.classList.remove("hidden");
+    } else {
+      backToTopBtn.classList.add("hidden");
+    }
+  };
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>
 </body>
 <body>
 </html>
