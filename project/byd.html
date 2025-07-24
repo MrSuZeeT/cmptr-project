@@ -4,47 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BYD - Electric Vehicles</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     /* Custom red for BYD logo and button */
     .byd-red {
-      color: #e60012;
+      color: #e60012 !important;
     }
     .byd-red-bg {
-      background-color: #e60012;
+      background-color: #e60012 !important;
     }
-    /* Navbar drop-down transition */
+    
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* Video background */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background: transparent !important;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-brand img {
+      width: 70px;
+    }
+
+    .navbar-nav .nav-link {
+      color: #fff !important;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #dc3545 !important;
+    }
+
     .dropdown-menu {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-    .dropdown-menu.open {
-      max-height: 100vh;
-    }
-    .navbar {
-     background: transparent;
-     padding: 1rem 0;
-     position: sticky;
-     top: 0;
-     z-index: 1000;
-    }
-    .navbar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      background-color: transparent;
+      background-color: rgba(0, 0, 0, 0.95);
+      border: none;
+      border-radius: 0.375rem;
     }
 
-    .hamburger {
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-      user-select: none;
+    .dropdown-item {
+      color: #fff;
+      transition: all 0.2s ease;
     }
 
+    .dropdown-item:hover {
+      background-color: #dc3545;
+      color: #000;
+    }
+
+    /* Mobile sidebar */
     .sidebar {
       position: fixed;
       top: 0;
@@ -59,7 +87,7 @@
       z-index: 1001;
     }
 
-    .sidebar.open {
+    .sidebar.show {
       right: 0;
     }
 
@@ -67,7 +95,7 @@
       margin-top: 0;
       margin-bottom: 1.5rem;
       font-size: 1.5rem;
-      color: red;
+      color: #dc3545;
     }
 
     .sidebar a {
@@ -79,7 +107,7 @@
     }
 
     .sidebar a:hover {
-      color: red;
+      color: #dc3545;
     }
 
     .overlay {
@@ -93,126 +121,334 @@
       z-index: 1000;
     }
 
-    .overlay.active {
+    .overlay.show {
       display: block;
     }
 
-   .btn {
-  display: inline-block;
-  padding: 15px 20px;
-  background-color: rgb(255, 0, 0);
-  border-radius: 1rem;
-  color: white;
-  border: 2px solid rgb(255, 0, 0);
-  transition: 0.3s ease;
-  cursor: pointer;
-  position: fixed;
-  bottom: 30px;
-  right: 30px; 
-  z-index: 999;
-}
+    /* Hero section */
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      padding-bottom: 5rem;
+    }
 
-.btn:hover {
-  transform: scale(1.05);
-  background-color: rgb(255, 0, 0);
-  color: white;
-  box-shadow: 0 0 25px rgb(238, 64, 64);
-}
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 50%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .btn-explore {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      padding: 15px 32px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-explore:hover {
+      background-color: #c82333;
+      border-color: #c82333;
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(220, 53, 69, 0.5);
+    }
+
+    /* Vehicle sections */
+    .vehicle-section {
+      position: relative;
+      min-height: 22rem;
+      overflow: hidden;
+      letter-spacing: 0.05em;
+    }
+
+    @media (min-width: 576px) {
+      .vehicle-section {
+        min-height: 26rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .vehicle-section {
+        min-height: 32rem;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .vehicle-section {
+        height: 50.625rem;
+      }
+    }
+
+    .vehicle-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(1.2);
+    }
+
+    .vehicle-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .vehicle-title {
+      position: absolute;
+      top: -1rem;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      font-size: 2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      background: linear-gradient(to right, rgba(241, 247, 255, 0.6), rgba(181, 189, 202, 0.6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
+      padding-top: 1.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    @media (min-width: 576px) {
+      .vehicle-title {
+        font-size: 3rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .vehicle-title {
+        font-size: 4rem;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .vehicle-title {
+        font-size: 6rem;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .vehicle-title {
+        font-size: 8rem;
+      }
+    }
+
+    @media (min-width: 1400px) {
+      .vehicle-title {
+        font-size: 10rem;
+      }
+    }
+
+    .vehicle-content {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+    }
+
+    .vehicle-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      transition: opacity 0.7s ease;
+    }
+
+    .vehicle-description {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      transition: opacity 0.7s ease;
+    }
+
+    .btn-test-drive {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-test-drive:hover {
+      background-color: #f8f9fa;
+      color: #000;
+    }
+
+    .btn-explore-vehicle {
+      background-color: transparent;
+      color: #fff;
+      border: 2px solid transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-left: 0.5rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn-explore-vehicle:hover {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: #fff;
+    }
+
+    @media (min-width: 992px) {
+      .btn-test-drive,
+      .btn-explore-vehicle {
+        padding: 0.75rem 1.75rem;
+      }
+    }
+
+    /* Back to top button */
+    .btn-back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      background-color: #dc3545;
+      border: 2px solid #dc3545;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-back-to-top:hover {
+      transform: scale(1.05);
+      background-color: #dc3545;
+      color: white;
+      box-shadow: 0 0 25px rgba(238, 64, 64, 0.5);
+    }
+
+    /* Hide elements on mobile */
+    @media (max-width: 767px) {
+      .vehicle-subtitle,
+      .vehicle-description {
+        display: none;
+      }
+    }
+
+    /* Navbar toggler */
+    .navbar-toggler {
+      border: none;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .navbar-toggler:focus {
+      box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+    }
+
+    .navbar-toggler-icon {
+      background-image: none;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .navbar-toggler-icon::before {
+      content: '☰';
+      color: white;
+      font-size: 2rem;
+      line-height: 1;
+    }
   </style>
 </head>
-<body class="bg-black text-white font-sans" background="images/Unleash the Future with BYD Seal.mp4">
- <video autoplay muted loop playsinline id="bg-video" class="fixed top-0 left-0 w-full h-full object-cover z-[-1]">
+<body>
+  <video autoplay muted loop playsinline id="bg-video">
     <source src="Unleash the Future with BYD Seal.mp4" type="video/mp4" />
     Your browser does not support the video tag.
- </video>
+  </video>
 
-  <header class="fixed top-0 left-0 right-0 z-50">
-    <div class="navbar">
-    <nav class="max-w-7xl mx-auto px-6 lg:px-16 flex items-center justify-between h-16">
-      <div class="flex-shrink-0 md:flex items-center space-x-8 text-sm font-medium">    
-        <a href="#" aria-label="BYD home" class="text-[1.75rem] font-black byd-red select-none"><img src="images/byd-seeklogo.png" alt="BYD" width="70px"></a>
-      </div>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid px-3 px-lg-5">
+      <a class="navbar-brand" href="#" aria-label="BYD home">
+        <img src="images/byd-seeklogo.png" alt="BYD">
+      </a>
 
-      <ul class="hidden md:flex items-center space-x-8 text-sm font-medium">
-        <li class="relative group">
-          <button aria-haspopup="true" aria-expanded="false" class="hover:text-red-600 focus:outline-none focus:text-red-600 inline-flex items-center gap-1">
-            Models
-            <svg class="w-3 h-3 text-white group-hover:text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-          </button>
-
-          <ul class="absolute left-0 mt-2 w-40 bg-black bg-opacity-95 rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200" role="menu" aria-label="Models submenu">
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Model A</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Model B</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Model C</a></li>
-          </ul>
-        </li>
-
-        <li class="relative group">
-          <button aria-haspopup="true" aria-expanded="false" class="hover:text-red-600 focus:outline-none focus:text-red-600 inline-flex items-center gap-1">
-            Technology
-            <svg class="w-3 h-3 text-white group-hover:text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-          </button>
-
-          <ul class="absolute left-0 mt-2 w-44 bg-black bg-opacity-95 rounded shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-200" role="menu" aria-label="Technology submenu">
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Battery</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Drive System</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black">Safety</a></li>
-          </ul>
-        </li>
-
-        <li><a href="#" class="hover:text-red-600 transition-colors">Price List</a></li>
-        <li><a href="#" class="hover:text-red-600 transition-colors">Charging Network</a></li>
-        <li><a href="#" class="hover:text-red-600 transition-colors">Find A Dealer</a></li>
-        <li><a href="#" class="hover:text-red-600 transition-colors">Contact Us</a></li>
-      </ul>
-
-      <button id="mobile-menu-btn" aria-label="Toggle menu" class="md:hidden focus:outline-none focus:ring-2 focus:ring-red-600">
-        <svg id="menu-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
+      <button class="navbar-toggler d-lg-none" type="button" onclick="toggleSidebar()" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
-    </nav>
 
-    <div id="mobile-menu" class="md:hidden bg-black bg-opacity-95 text-white">
-      <ul class="flex flex-col px-6 py-4 space-y-3 text-base font-medium">
-
-        <li>
-          <button aria-haspopup="true" aria-expanded="false" class="w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-red-600" data-dropdown="models-dropdown">
-            Models
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
-          </button>
-          <ul id="models-dropdown" class="dropdown-menu pl-4 mt-2 space-y-1">
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Model A</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Model B</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Model C</a></li>
-          </ul>
-        </li>
-
-        <li>
-          <button aria-haspopup="true" aria-expanded="false" class="w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-red-600" data-dropdown="technology-dropdown">
-            Technology
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
-          </button>
-          <ul id="technology-dropdown" class="dropdown-menu pl-4 mt-2 space-y-1">
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Battery</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Drive System</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Safety</a></li>
-          </ul>
-        </li>
-
-        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Price List</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Charging Network</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Find A Dealer</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-red-600 hover:text-black rounded">Contact Us</a></li>
-      </ul>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Models
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Model A</a></li>
+              <li><a class="dropdown-item" href="#">Model B</a></li>
+              <li><a class="dropdown-item" href="#">Model C</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Technology
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Battery</a></li>
+              <li><a class="dropdown-item" href="#">Drive System</a></li>
+              <li><a class="dropdown-item" href="#">Safety</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Price List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Charging Network</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Find A Dealer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact Us</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="hamburger" onclick="toggleSidebar()">☰</div>
-    </div>
-  </div>
+  </nav>
 
+  <!-- Mobile Sidebar -->
   <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
-
   <div id="sidebar" class="sidebar">
     <h2>BYD Menu</h2>
     <a href="#">Blade Battery</a>
@@ -228,172 +464,153 @@
     <a href="#">About BYD</a>
     <a href="#">Contact Us</a>
   </div>
-  </header>
-</section>
 
-<section class="relative max-w-screen overflow-hidden h-screen bg-black">
-    <div class="absolute inset-0">
-        <video autoplay muted loop playsinline class="w-full h-full object-cover">
-            <source src="images/Unleash the Future with BYD Seal.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"></div>
-    </div>
-    <div class="relative z-10 flex flex-col items-center justify-end pb-20 h-full px-6 text-center">
-        <div class="max-w-4xl mx-auto space-y-6">
-            <div class="pt-8">
-                <a class="inline-block bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 ease-in-out hover:bg-red-700 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-500/50" href="/sealion7">Explore Now</a>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="images/Unleash the Future with BYD Seal.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <div class="pt-4">
+              <a class="btn btn-danger btn-explore" href="/sealion7">Explore Now</a>
             </div>
+          </div>
         </div>
-    </div>
-</section>
-
-<main>
-    <div class="featured-vehicles">
-        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
-            <div class="absolute inset-0 z-[-1]">
-                <img alt="Byd Sealion 7 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="images/2.webp" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
-                <div class="absolute inset-0 bg-black/30"></div>
-            </div>
-            <div class="absolute top-0 left-0 right-0 z-10">
-                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Sealion 7</h1>
-            </div>
-            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
-                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Coming Soon</p>
-                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">All electric full-sized SUV</p>
-                <div class="transition-opacity duration-700">
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-sealion-7">Book a Test Drive</a>
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/sealion7">Explore Now</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
-            <div class="absolute inset-0 z-[-1]">
-                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="images/m6-bg-ag7dS6p9.webp" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
-                <div class="absolute inset-0 bg-black/30"></div>
-            </div>
-            <div class="absolute top-0 left-0 right-0 z-10">
-                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd M6</h1>
-            </div>
-            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
-                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Safe Comfortable Spacious</p>
-                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Nepal's First Premium 7-seater Electric MPV</p>
-                <div class="transition-opacity duration-700">
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
-            <div class="absolute inset-0 z-[-1]">
-                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="images/sealcom-BDg0Ylg1.jpg" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
-                <div class="absolute inset-0 bg-black/30"></div>
-            </div>
-            <div class="absolute top-0 left-0 right-0 z-10">
-                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Seal</h1>
-            </div>
-            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
-                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Seal Your Success</p>
-                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Innovation Meets Acceleration</p>
-                <div class="transition-opacity duration-700">
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
-            <div class="absolute inset-0 z-[-1]">
-                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="images/homeDolphin.jpg" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
-                <div class="absolute inset-0 bg-black/30"></div>
-            </div>
-            <div class="absolute top-0 left-0 right-0 z-10">
-                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Dolphin</h1>
-            </div>
-            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
-                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Safe & Smart Family Car</p>
-                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Agile Versatile Intelligent</p>
-                <div class="transition-opacity duration-700">
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="relative min-h-[22rem] sm:min-h-[26rem] md:min-h-[32rem] lg:h-[50.625rem] overflow-hidden tracking-wider">
-            <div class="absolute inset-0 z-[-1]">
-                <img alt="Byd M6 banner" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" src="images/atto3-bg-BlwpiNHS.webp" loading="eager" decoding="sync" fetchpriority="high" style="opacity: 1; filter: brightness(1.2);">
-                <div class="absolute inset-0 bg-black/30"></div>
-            </div>
-            <div class="absolute top-0 left-0 right-0 z-10">
-                <h1 class="text-[2rem] xs:text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[10rem] uppercase font-bold text-center bg-gradient-to-r from-[#F1F7FF]/60 to-[#B5BDCA]/60 bg-clip-text text-transparent drop-shadow-2xl absolute top-[-1rem] left-0 right-0 z-10 pt-6 px-2 md:px-0">Byd Atto 3</h1>
-            </div>
-            <div class="absolute bottom-10 left-0 right-0 text-center text-white">
-                <p class="hidden md:block text-2xl mb-2 transition-opacity duration-700">Energy Awaken</p>
-                <p class="hidden md:block text-lg mb-8 transition-opacity duration-700">Nepal's First Sporty Electric SUV</p>
-                <div class="transition-opacity duration-700">
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 bg-white text-md text-black shadow-lg rounded-md inline-block hover:bg-gray-100 transition-all duration-300" href="/test-drive?model=byd-m6">Book a Test Drive</a>
-                    <a class="py-2 lg:py-3 px-4 lg:px-7 text-md bg-transparent font-black hover:bg-red-600 hover:border-red-600 text-white rounded-md ml-2 transition-all duration-300 inline-block" href="/product-details/byd-m6">Explore Now</a>
-                </div>
-            </div>
-        </section>
       </div>
-      <div id="footer-placeholder"></div>
-      
-      <!-- footer.html -->
+    </div>
+  </section>
 
-    
-</main>
+  <!-- Vehicle Sections -->
+  <main>
+    <!-- BYD Sealion 7 -->
+    <section class="vehicle-section">
+      <img alt="Byd Sealion 7 banner" class="vehicle-bg" src="images/2.webp" loading="eager">
+      <div class="vehicle-overlay"></div>
+      <h1 class="vehicle-title">BYD Sealion 7</h1>
+      <div class="vehicle-content">
+        <p class="vehicle-subtitle d-none d-md-block">Coming Soon</p>
+        <p class="vehicle-description d-none d-md-block">All electric full-sized SUV</p>
+        <div>
+          <a class="btn-test-drive" href="/test-drive?model=byd-sealion-7">Book a Test Drive</a>
+          <a class="btn-explore-vehicle" href="/sealion7">Explore Now</a>
+        </div>
+      </div>
+    </section>
 
-<button onclick="scrollToTop()" id="backToTopBtn" title="Go to top" class="btn hidden">
-  <i class="fas fa-arrow-up"></i>
-</button>
-<div id="footer-placeholder"></div>
+    <!-- BYD M6 -->
+    <section class="vehicle-section">
+      <img alt="Byd M6 banner" class="vehicle-bg" src="images/m6-bg-ag7dS6p9.webp" loading="eager">
+      <div class="vehicle-overlay"></div>
+      <h1 class="vehicle-title">BYD M6</h1>
+      <div class="vehicle-content">
+        <p class="vehicle-subtitle d-none d-md-block">Safe Comfortable Spacious</p>
+        <p class="vehicle-description d-none d-md-block">Nepal's First Premium 7-seater Electric MPV</p>
+        <div>
+          <a class="btn-test-drive" href="/test-drive?model=byd-m6">Book a Test Drive</a>
+          <a class="btn-explore-vehicle" href="/product-details/byd-m6">Explore Now</a>
+        </div>
+      </div>
+    </section>
 
-<script>
-  fetch('footer.html')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.text();
-    })
-    .then(html => {
-      document.getElementById('footer-placeholder').innerHTML = html;
-    })
-    .catch(error => {
-      console.error('Failed to load footer:', error);
-    });
-</script>
+    <!-- BYD Seal -->
+    <section class="vehicle-section">
+      <img alt="Byd Seal banner" class="vehicle-bg" src="images/sealcom-BDg0Ylg1.jpg" loading="eager">
+      <div class="vehicle-overlay"></div>
+      <h1 class="vehicle-title">BYD Seal</h1>
+      <div class="vehicle-content">
+        <p class="vehicle-subtitle d-none d-md-block">Seal Your Success</p>
+        <p class="vehicle-description d-none d-md-block">Innovation Meets Acceleration</p>
+        <div>
+          <a class="btn-test-drive" href="/test-drive?model=byd-seal">Book a Test Drive</a>
+          <a class="btn-explore-vehicle" href="/product-details/byd-seal">Explore Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BYD Dolphin -->
+    <section class="vehicle-section">
+      <img alt="Byd Dolphin banner" class="vehicle-bg" src="images/homeDolphin.jpg" loading="eager">
+      <div class="vehicle-overlay"></div>
+      <h1 class="vehicle-title">BYD Dolphin</h1>
+      <div class="vehicle-content">
+        <p class="vehicle-subtitle d-none d-md-block">Safe & Smart Family Car</p>
+        <p class="vehicle-description d-none d-md-block">Agile Versatile Intelligent</p>
+        <div>
+          <a class="btn-test-drive" href="/test-drive?model=byd-dolphin">Book a Test Drive</a>
+          <a class="btn-explore-vehicle" href="/product-details/byd-dolphin">Explore Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BYD Atto 3 -->
+    <section class="vehicle-section">
+      <img alt="Byd Atto 3 banner" class="vehicle-bg" src="images/atto3-bg-BlwpiNHS.webp" loading="eager">
+      <div class="vehicle-overlay"></div>
+      <h1 class="vehicle-title">BYD Atto 3</h1>
+      <div class="vehicle-content">
+        <p class="vehicle-subtitle d-none d-md-block">Energy Awaken</p>
+        <p class="vehicle-description d-none d-md-block">Nepal's First Sporty Electric SUV</p>
+        <div>
+          <a class="btn-test-drive" href="/test-drive?model=byd-atto3">Book a Test Drive</a>
+          <a class="btn-explore-vehicle" href="/product-details/byd-atto3">Explore Now</a>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+  </main>
+
+  <!-- Back to Top Button -->
+  <button onclick="scrollToTop()" id="backToTopBtn" title="Go to top" class="btn-back-to-top d-none">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script>
-  const backToTopBtn = document.getElementById("backToTopBtn");
+    // Load footer
+    fetch('footer.html')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('footer-placeholder').innerHTML = html;
+      })
+      .catch(error => {
+        console.error('Failed to load footer:', error);
+      });
 
-  window.onscroll = function () {
-    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-      backToTopBtn.classList.remove("hidden");
-    } else {
-      backToTopBtn.classList.add("hidden");
+    // Back to top functionality
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.onscroll = function () {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        backToTopBtn.classList.remove("d-none");
+      } else {
+        backToTopBtn.classList.add("d-none");
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
 
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-</script>
- <script>
+    // Mobile sidebar toggle
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       const overlay = document.getElementById("overlay");
-      sidebar.classList.toggle("open");
-      overlay.classList.toggle("active");
-    }
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      sidebar.classList.toggle("show");
+      overlay.classList.toggle("show");
     }
   </script>
 </body>
 </html>
-
